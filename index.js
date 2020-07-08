@@ -48,7 +48,7 @@ bot.on('disconnect', e => {
 
 async function login() {
   try {
-    await bot.login(token)
+    await bot.login(process.env.token)
   } catch (err) {
     console.error('The bot failed to login:', err)
   }
