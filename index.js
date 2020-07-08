@@ -1,5 +1,6 @@
 // Dependencies
 require('dotenv').config({ path: `${__dirname}/.env` })
+
 const Discord = require('discord.js')
 
 // Queue Managment
@@ -16,6 +17,7 @@ let botUser = {}
 // Environment Variables
 const token = process.env.token
 const channelName = process.env.channelName
+const categoryName = process.env.categoryName
 
 bot.on('ready', e => {
   const { username, id } = bot.user
@@ -25,6 +27,7 @@ bot.on('ready', e => {
 
   console.log(`Logged in as: ${username} - ${id}`)
   console.log(`I will be listening for messages on your text-channel: ${channelName}`)
+  console.log(`I will be listening for messages on category: ${categoryName}`)
 
   bot.user.setActivity('Warzone QC')
 })

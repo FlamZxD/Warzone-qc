@@ -51,5 +51,5 @@ module.exports = (oldMember, newMember) => {
         deletePlayerQueue(lobby.id)
       }
     }
-  }
+  }  
 }
