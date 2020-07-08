@@ -14,7 +14,8 @@ const bot = new Discord.Client()
 let botUser = {}
 
 // Environment Variables
-const { token, channelName } = process.env
+const token = process.env.token
+const channelName = process.env.channelName
 
 bot.on('ready', e => {
   const { username, id } = bot.user
@@ -48,7 +49,7 @@ bot.on('disconnect', e => {
 
 async function login() {
   try {
-    await bot.login(process.env.token)
+    await bot.login(token)
   } catch (err) {
     console.error('The bot failed to login:', err)
   }
