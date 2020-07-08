@@ -49,7 +49,7 @@ module.exports = async (eventObj, botUser = { id: undefined }) => {
   }
 
   if (isCommand && !queue && validCommandCheck[command]) {
-    channel.send(`Vous n'avez pas rejoint la queue <@${playerId}>. Tapper __${commandToString.queue}__ pour rejoindre!`)
+    channel.send(`Vous n'avez pas rejoint la queue <@${playerId}>. Tapper __**${commandToString.queue}**__ pour rejoindre!`)
     return
   }
 
