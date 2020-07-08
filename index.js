@@ -29,7 +29,7 @@ bot.on('ready', e => {
   console.log(`I will be listening for messages on your text-channel: ${channelName}`)
   console.log(`I will be listening for messages on category: ${categoryName}`)
 
-  bot.user.setActivity('Warzone QC')
+  bot.user.setActivity('!6m-help')
 })
 
 // Handle 6man commands when a user sends the message
