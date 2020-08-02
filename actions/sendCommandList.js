@@ -5,7 +5,7 @@ module.exports = eventObj => {
 
   channel.send({
     embed: {
-      color: 15158332,
+      color: 3066993,
       title: 'Liste de commandes pour les 6mans',
       description: 'Toutes les commandes possibles pour les 6mans',
       fields: [

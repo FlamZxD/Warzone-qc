@@ -21,6 +21,11 @@ module.exports = (eventObj, queue) => {
           value: `Vous pouvez vérifier le status du vote en tappant __**${commandToString.votestatus}**__`,
         },
       ],
+      timestamp: new Date(),
+        footer: {
+          icon_url: 'https://cdn.discordapp.com/avatars/727015369910517772/1d6bbe7ec5d602c5dad8bc878cfaf479.png',
+          text: "Robot 6mans"
+        }
     },
   })
 }

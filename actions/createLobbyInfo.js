@@ -7,7 +7,8 @@ module.exports = async (eventObj, queue) => {
 
   const randomTeam = randomNumber(1) === 0 ? 'blue' : 'orange'
   const randomPlayer = randomNumber(2)
-  let creatorId = teams[randomTeam].players[randomPlayer].id
+
+  const creatorId = teams[randomTeam].players[randomPlayer].id
 
   const readyEmbed = {
     embed: {
@@ -31,20 +32,9 @@ module.exports = async (eventObj, queue) => {
     },
   }
 
- function sendLobbyInfo(players) {
-    players.forEach(player => {
-      player.dmPlayer(readyEmbed)
-    })
- }
-
   // Create Voice Channels for each team
   await createVoiceChannels(eventObj, queue)
-  console.log(`createVoiceChannel finished, queue:`, queue)
-
-  // DM Blue Team
-  sendLobbyInfo(teams.blue.players)
-  // DM Orange Team
-  sendLobbyInfo(teams.orange.players)
+  console.log(`createVoiceChannel finished, queue:`, queue) 
 
   // Inform the channel that everything is ready
   channel.send(readyEmbed)

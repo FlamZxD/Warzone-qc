@@ -25,9 +25,6 @@ module.exports = (eventObj, queue) => {
     .split('-')[1]
 
   if (!votes.playersWhoVoted[playerId]) {
-
-    channel.send(`<@${playerId}> à voté!`)
-
     // The player has not voted yet
     votes[vote]++
     votes.playersWhoVoted[playerId] = true

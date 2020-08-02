@@ -27,11 +27,11 @@ module.exports = async (eventObj, queue) => {
   channel.send({
     embed: {
       color: 2201331,
-      title: `Lobby ${lobby.name} - Captain structure`,
-      description: 'The vote resulted in captain structure. The following are your captains:',
+      title: `Lobby ${lobby.name} - Structure capitaine`,
+      description: 'Le vote a abouti à la structure capitaine. Voici vos capitaines:',
       fields: [
-        { name: 'Captain Blue', value: `<@${teams.blue.captain.id}>` },
-        { name: 'Captain Orange', value: `<@${teams.orange.captain.id}>` },
+        { name: 'Captaine Bleu', value: `<@${teams.blue.captain.id}>` },
+        { name: 'Captaine Orange', value: `<@${teams.orange.captain.id}>` },
       ],
     },
   })
@@ -43,7 +43,7 @@ module.exports = async (eventObj, queue) => {
   // Direct message the first pick captain
   // First pick gets to select 1 player
   const message = await teams[firstPick].captain.dmPlayer(
-    'Choose ONE player to be on your team by clicking an emoji:\n' + playersToMentions(players)
+    'Choisissez UN joueur pour faire partie de votre équipe en cliquant sur un emoji:\n' + playersToMentions(players)
   )
   await message.react('0️⃣')
   await message.react('1️⃣')
@@ -71,7 +71,7 @@ module.exports = async (eventObj, queue) => {
     // Direct message the second pick captain
     // Second pick gets to select 2 players
     const message = await teams[secondPick].captain.dmPlayer(
-      'Choose TWO players to be on your team by clicking an emoji:\n' + playersToMentions(players)
+      'Choisissez DEUX joueurs pour faire partie de votre équipe en cliquant sur un emoji:\n' + playersToMentions(players)
     )
     await message.react('0️⃣')
     await message.react('1️⃣')

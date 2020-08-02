@@ -20,21 +20,34 @@ module.exports = (eventObj, queue) => {
   playerIdsIndexed[playerId] = true
 
   // Notify the player that they have joined the queue
-
   if(remainingPlayersRequired == 6){
     channel.send(`@here`)
+    channel.send({
+      embed: {
+        color: 3066993,
+        title: `${remainingPlayersRequired - 1} joueurs nécéssaires pour débuter!`,
+        description: `<@${playerId}> à rejoint la queue!`,
+        timestamp: new Date(),
+          footer: {
+            icon_url: 'https://cdn.discordapp.com/avatars/727015369910517772/1d6bbe7ec5d602c5dad8bc878cfaf479.png',
+            text: "Robot 6mans"
+          }
+      },
+    })
+  }else if(remainingPlayersRequired <=5){
+    channel.send({
+      embed: {
+        color: 3066993,
+        title: `${remainingPlayersRequired - 1} joueurs nécéssaires pour débuter!`,
+        description: `<@${playerId}> à rejoint la queue!`,
+        timestamp: new Date(),
+          footer: {
+            icon_url: 'https://cdn.discordapp.com/avatars/727015369910517772/1d6bbe7ec5d602c5dad8bc878cfaf479.png',
+            text: "Robot 6mans"
+          }
+      },
+    })
   }
-
-  channel.send({
-    embed: {
-      color: 3066993,
-      title: `Vous avez à rejoint la queue!`,
-      description: `${remainingPlayersRequired - 1} joueur(s) nécéssaire(s) pour débuter!`,
-      fields: [
-        { name: 'Joueur(s) dans la queue', value: playerIdsIndexedToMentions(playerIdsIndexed) },
-      ],
-    },
-  })
 
   // Check to see if 6 players have queued now
   if (Object.keys(playerIdsIndexed).length === 6) {

@@ -11,7 +11,7 @@ module.exports = (eventObj, queue) => {
   // Player is in the queue
   if (!votingInProgress && !creatingTeamsInProgress && !readyToJoin) {
     // Voting has not started yet
-    return channel.send(`The voting phase has not started yet <@${playerId}>`)
+    return channel.send(`La phase de vote n'a pas commencée <@${playerId}>`)
   }
 
   // Voting has started already
@@ -51,7 +51,11 @@ module.exports = (eventObj, queue) => {
       color: 2201331,
       title: `Lobby ${lobby.name} - Vote status`,
       description: `${remainingVotesRequired} votes remaining`,
-      fields,
+        timestamp: new Date(),
+        footer: {
+          icon_url: 'https://cdn.discordapp.com/avatars/727015369910517772/1d6bbe7ec5d602c5dad8bc878cfaf479.png',
+          text: "Robot 6mans"
+        }
     },
   })
 }

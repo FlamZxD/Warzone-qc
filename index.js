@@ -1,6 +1,5 @@
 // Dependencies
 require('dotenv').config({ path: `${__dirname}/.env` })
-
 const Discord = require('discord.js')
 
 // Queue Managment
@@ -15,9 +14,7 @@ const bot = new Discord.Client()
 let botUser = {}
 
 // Environment Variables
-const token = process.env.token
-const channelName = process.env.channelName
-const categoryName = process.env.categoryName
+const { token, channelName } = process.env
 
 bot.on('ready', e => {
   const { username, id } = bot.user
@@ -27,9 +24,6 @@ bot.on('ready', e => {
 
   console.log(`Logged in as: ${username} - ${id}`)
   console.log(`I will be listening for messages on your text-channel: ${channelName}`)
-  console.log(`I will be listening for messages on category: ${categoryName}`)
-
-  bot.user.setActivity('!6m-help')
 })
 
 // Handle 6man commands when a user sends the message
@@ -37,7 +31,7 @@ bot.on('message', eventObj => messageHandler(eventObj, botUser))
 
 // Remove players from the queue if they go offline
 bot.on('presenceUpdate', (oldMember, newMember) => {
-  if (newMember.setStatus === 'offline') {
+  if (newMember.presence.status === 'offline') {
     // Remove this player from the queue if they are in one
     removeOfflinePlayerFromQueue({ playerId: newMember.user.id, playerChannels: newMember.client.channels })
   }
@@ -58,25 +52,5 @@ async function login() {
   }
 }
 
-const PREFIX = '!';
-
-bot.on('message', async message =>  { 1
-
-  let args = message.content.substring(PREFIX.length).split(" ");
-
-  switch(args[0]){//toutes les commandes
-
-      case 'tag'://si !tag -> utilise 2e argument placer danbs la commande
-            if(!args[1]) return message.reply('Erreur veuillez entrez un deuxième arguments!')
-                message.channel.send(args[1] + ' est yeeeet en TABARNAK');//envoie un message PAS tagger @FlamZ
-      break;
-
-      case 'clear':
-            if(!args[1]) return message.reply('Erreur veuillez entrez un deuxième arguments!')
-                message.channel.bulkDelete(args[1]);//Supprime les message
-      break;
-  }
-
-})
 login()
 module.exports = bot

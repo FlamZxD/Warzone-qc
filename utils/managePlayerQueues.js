@@ -2,7 +2,7 @@ const randomstring = require('randomstring')
 const playerIdsIndexedToMentions = require('../utils/playerIdsIndexedToMentions')
 const { commandToString } = require('./commands')
 
-let lobbyId = 0
+let lobbyId = 00
 
 function createQueue() {
   return {
@@ -27,6 +27,15 @@ function createQueue() {
         captain: undefined,
         voiceChannelID: undefined,
         voiceChannelHistory: {},
+      },
+      general: {
+        voiceChannelID: undefined,
+      },
+      invitation: {
+        voiceChannelID: undefined,
+      },
+      category: {
+        voiceChannelID: undefined,
       },
     },
     readyToJoin: false,
@@ -102,21 +111,13 @@ const removeOfflinePlayerFromQueue = ({ playerId, playerChannels }) => {
     deletePlayerQueue(playersQueue.lobby.id)
   } else {
     // Notify the other players in the queue of the removal
-    if (channel) {
       channel.send({
         embed: {
           color: 2201331,
-          title: `Lobby ${playersQueue.lobby.name} - Joueur supprimé`,
-          description: `<@${playerId}> à été supprimé de la queue car il est désormais hors-ligne.`,
-          fields: [
-            { name: 'Joueur dans la queue', value: playerIdsIndexedToMentions(playersQueue.playerIdsIndexed) },
-            { name: 'Phase de vote en cours', value: playersQueue.votingInProgress, inline: true },
-            { name: 'Création des équipes en cours', value: playersQueue.creatingTeamsInProgress, inline: true },
-            { name: 'Lobby prêt', value: playersQueue.readyToJoin, inline: true },
-          ],
+          title: `Lobby ${playersQueue.lobby.name} - Joueur kick de la queue`,
+          description: `<@${playerId}> à été supprimé de la file d'attente car ce dernier est passés hors ligne.`,
         },
       })
-    }
   }
 }
 

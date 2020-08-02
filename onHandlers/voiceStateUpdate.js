@@ -1,7 +1,7 @@
 const { determinePlayerQueue, deletePlayerQueue } = require('../utils/managePlayerQueues')
 
 module.exports = (oldMember, newMember) => {
-  const queue = determinePlayerQueue(newMember.id, undefined)
+  const queue = determinePlayerQueue(newMember.user.id, undefined)
   const guild = newMember.guild
 
   // Player is not in a queue
@@ -9,17 +9,21 @@ module.exports = (oldMember, newMember) => {
 
   // Player is in a queue
   const {
-    teams: { blue, orange },
+    teams: { blue, orange, general, invitation, category },
     lobby,
   } = queue
 
+  /*const {
+    cannal: {general, invitation, category},
+  } = queue*/
+
   // Track how many users joined the voice channels
   if (newMember.voiceChannelID === blue.voiceChannelID) {
-    blue.voiceChannelHistory[newMember.id] = true
+    blue.voiceChannelHistory[newMember.user.id] = true
   }
 
   if (newMember.voiceChannelID === orange.voiceChannelID) {
-    orange.voiceChannelHistory[newMember.id] = true
+    orange.voiceChannelHistory[newMember.user.id] = true
   }
 
   console.log('blue voice channel history', blue.voiceChannelHistory)
@@ -30,26 +34,28 @@ module.exports = (oldMember, newMember) => {
     (oldMember.voiceChannelID === blue.voiceChannelID || oldMember.voiceChannelID === orange.voiceChannelID) &&
     (newMember.voiceChannelID !== blue.voiceChannelID || newMember.voiceChannelID !== orange.voiceChannelID)
   ) {
-    console.log('tout les joueurs on quitter les canaux vocaux !!!')
     // Check that all 3 members have joined the orange and blue voice channels
     if (Object.keys(blue.voiceChannelHistory).length >= 3 && Object.keys(orange.voiceChannelHistory).length >= 3) {
       const blueVoiceChannel = guild.channels.get(blue.voiceChannelID)
       const orangeVoiceChannel = guild.channels.get(orange.voiceChannelID)
 
-      console.log('Tout le monde est connecter!')
+      const generalVoiceChannel = guild.channels.get(general.voiceChannelID)
+      const invitationTextChannel = guild.channels.get(invitation.voiceChannelID)
+      const categoryChannel = guild.channels.get(category.voiceChannelID)
 
       if (blueVoiceChannel.members.size === 0 && orangeVoiceChannel.members.size === 0) {
-        console.log('delete les voices channels')
         // Delete the voice channels
         blueVoiceChannel.delete()
         orangeVoiceChannel.delete()
+
         generalVoiceChannel.delete()
         invitationTextChannel.delete()
         categoryChannel.delete()
+        //delete categoryChannel, invitationTextChannel, generalVoiceChannel
 
         // Delete the player queue
         deletePlayerQueue(lobby.id)
       }
     }
-  }  
+  }
 }

@@ -5,7 +5,7 @@ module.exports = ({ playerId, channel, queue }) => {
 
   if (!playerIdsIndexed[playerId]) {
     if (channel) {
-      channel.send(`Vous n'avez pas rejoint la queue <@${playerId}>. Tapper ${commandToString.queue} pour rejoindre!`)
+      channel.send(`Vous devez avoir rejoint la queue <@${playerId}>. Tappez ${commandToString.queue} pour rejoindre!`)
     }
 
     return true

@@ -21,7 +21,10 @@ module.exports = async (eventObj, botUser = { id: undefined }) => {
   // If this is a DM to the bot,
   // If there is a channelName provided in the .env and the channel name doesn't match,
   // If the user is in invisible mode or offline,
-  
+  // See ya l8r virgin
+  if (eventObj.author.presence.status === 'offline' && commonLogCheck) {
+    return console.log('The user is offline, disregarding message')
+  }
 
   if (channelName && eventObj.channel.name !== channelName && commonLogCheck) {
     return console.log('The user is typing on a different channel, disregarding message')
@@ -43,13 +46,8 @@ module.exports = async (eventObj, botUser = { id: undefined }) => {
   const playerId = eventObj.author.id
   const queue = determinePlayerQueue(playerId, command)
 
-  if (eventObj.author.presence.status === 'offline' && commonLogCheck) {
-    channel.send(`Vous êtes hors-ligne <@${playerId}>. Veuillez vous mettre en ligne pour utiliser le bot!`)
-    return
-  }
-
   if (isCommand && !queue && validCommandCheck[command]) {
-    channel.send(`Vous n'avez pas rejoint la queue <@${playerId}>. Tapper __**${commandToString.queue}**__ pour rejoindre!`)
+    channel.send(`Vous devez avoir rejoint la queue <@${playerId}>. Tappez ${commandToString.queue} pour rejoindre!`)
     return
   }
 

@@ -2,7 +2,7 @@ module.exports = async (eventObj, queue) => {
   const { lobby, teams } = queue
   const channel = eventObj.author.lastMessage.channel
   const guild = eventObj.guild
-  const everyoneRole = guild.roles.cache.find(roleObj => roleObj.name === '@everyone')
+  const everyoneRole = guild.roles.find(roleObj => roleObj.name === '@everyone')
 
   if (guild.available) {
 
@@ -10,7 +10,7 @@ module.exports = async (eventObj, queue) => {
 
     async function createChannelCategory () {
 
-      const categoryChannel =  await guild.channels.create(`Lobby-${lobby.name}`, {
+      const categoryChannel =  await guild.createChannel(`Lobby-${lobby.name}`, {
         topic: 'Lobby',
         type: 'category',
         permissionOverwrites: [
@@ -33,7 +33,7 @@ module.exports = async (eventObj, queue) => {
         ],
       });
 
-      const invitationTextChannel = await guild.channels.create(`Invitation`, {
+      const invitationTextChannel = await guild.createChannel(`Invitation`, {
         parent: categoryChannel.id,
         topic: `Invitation`,
         userLimit: 6,
@@ -58,7 +58,7 @@ module.exports = async (eventObj, queue) => {
         ],
       })
 
-      const generalVoiceChannel = await guild.channels.create(`Générale`, {
+      const generalVoiceChannel = await guild.createChannel(`Générale`, {
         parent: categoryChannel.id,
         topic: `Générale`,
         userLimit: 6,
@@ -83,7 +83,7 @@ module.exports = async (eventObj, queue) => {
         ],
       })
 
-      const blueVoiceChannel = await guild.channels.create(`Team-Bleu`, {
+      const blueVoiceChannel = await guild.createChannel(`Team-Bleu`, {
         parent: categoryChannel.id,
         topic: `${lobby.name} - Team Blue Coms`,
         userLimit: 3,
@@ -109,7 +109,7 @@ module.exports = async (eventObj, queue) => {
       })
       
 
-      const orangeVoiceChannel = await guild.channels.create(`Team-Orange`, {
+      const orangeVoiceChannel = await guild.createChannel(`Team-Orange`, {
         parent: categoryChannel.id,
         topic: `${lobby.name} - Team Orange Coms`,
         userLimit: 3,
@@ -136,6 +136,9 @@ module.exports = async (eventObj, queue) => {
     
     teams.blue.voiceChannelID = blueVoiceChannel.id
     teams.orange.voiceChannelID = orangeVoiceChannel.id
+    teams.general.voiceChannelID = generalVoiceChannel.id
+    teams.invitation.voiceChannelID = invitationTextChannel.id
+    teams.category.voiceChannelID = categoryChannel.id
   }
 
   createChannelCategory();

@@ -5,7 +5,7 @@ module.exports = (eventObj, queue) => {
   const { players, playerIdsIndexed, lobby, votingInProgress, creatingTeamsInProgress, readyToJoin } = queue
   const channel = eventObj.author.lastMessage.channel
   const playerId = eventObj.author.id
-  const remainingPlayersRequired = 6 - players.length
+  const remainingPlayersRequired = players.length
 
   // Player is not in the queue
   if (playerNotInQueue({ playerId, channel, queue })) return
@@ -14,14 +14,15 @@ module.exports = (eventObj, queue) => {
   channel.send({
     embed: {
       color: 3066993,
-      title: `Lobby ${lobby.name} - Status`,
-      description: `${remainingPlayersRequired} joueur(s) nécéssaire(s)`,
+      description: `${remainingPlayersRequired}/6 joueur(s) présent(s) dans la queue`,
       fields: [
         { name: 'Joueur dans la queue: ', value: playerIdsIndexedToMentions(playerIdsIndexed) },
-        /*{ name: 'Vote', value: votingInProgress, inline: true },
-        { name: 'Création des équipes', value: creatingTeamsInProgress, inline: true },
-        { name: 'Lobby prêt', value: readyToJoin, inline: true },*/
       ],
+      timestamp: new Date(),
+        footer: {
+          icon_url: 'https://cdn.discordapp.com/avatars/727015369910517772/1d6bbe7ec5d602c5dad8bc878cfaf479.png',
+          text: "Robot 6mans"
+        }
     },
   })
 }
